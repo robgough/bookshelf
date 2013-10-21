@@ -1,4 +1,7 @@
-task :default => [:specs, :cukes_domain, :cukes_web]
+task :default => [:clear, :specs, :cukes_domain, :cukes_web]
+task "clear" do
+  sh "clear"
+end
 desc "run the specs"
 task "specs" do
   sh "rspec --color"

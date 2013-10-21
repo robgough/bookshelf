@@ -7,7 +7,11 @@ module DomainDriver
   end
 
   def search_by_title(title)
-    @search_results = library.search_by_title title
+    library.search_by_title title, self
+  end
+
+  def display_search_results(results)
+    @search_results = results
   end
 
   def search_results

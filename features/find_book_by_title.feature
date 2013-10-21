@@ -22,8 +22,3 @@ Feature: Find a book by title
     Given a bookshelf with a few books
     When I search for a book
     Then shows the book
-
-  Scenario: Search with different case
-    Given a bookshelf with one book
-    When I search for a book using lowercase
-    Then shows the book

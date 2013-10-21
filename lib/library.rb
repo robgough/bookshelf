@@ -1,19 +1,26 @@
+require_relative 'library/bookshelf'
 class Library
   attr_reader :books
   def initialize
-    @books = []
+    @books = Bookshelf.new
   end
 
   def add_book(title)
-    @books << Book.new(title)
+    @books.add Book.new(title)
   end
 
-  def search_by_title(title)
-    raise ArgumentError if title.to_s.strip.length < 1
-    @books.find_all { |n| n if n.title.downcase.match title.downcase }
+  def search_by_title(title, ui)
+    result = @books.search_by_title title
+    ui.display_search_results(result)
   end
 
   class Book < Struct.new(:title)
+  end
+end
+
+class SearchResultsPage < Struct.new(:controller)
+  def display_search_results(results)
+    controller.erb :search, locals: { results: results }
   end
 end
 
@@ -34,8 +41,7 @@ get '/' do
 end
 
 get '/search' do
-  @results = library.search_by_title(params[:query])
-  erb :search
+  library.search_by_title(params[:query], SearchResultsPage.new(self))
 end
 
 get '/add' do
