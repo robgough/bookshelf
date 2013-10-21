@@ -49,8 +49,14 @@ class Library
     it_should_behave_like 'a bookshelf'
   end
 
-  describe Bookshelf::Mongo do
-    let(:bookshelf) { Bookshelf.new }
+  describe Bookshelf::MongoBookshelf do
+    let(:bookshelf) do
+      Bookshelf::MongoBookshelf.new('bookshelf')
+    end
+
+    before do
+      bookshelf.delete_all
+    end
 
     it_should_behave_like 'a bookshelf'
   end 
