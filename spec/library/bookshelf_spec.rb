@@ -1,9 +1,7 @@
 require 'library'
 class Library
-  describe Bookshelf do 
+  shared_examples_for 'a bookshelf' do
     subject { Library.new }
-    let(:bookshelf) { Bookshelf.new }
-
     it 'should error when searching with empty string' do
       mysearch = ""
       expect{bookshelf.search_by_title(mysearch)}.to raise_error(ArgumentError, "invalid search")
@@ -42,5 +40,18 @@ class Library
     def a_book(title)
       Library::Book.new(title)
     end
+
   end
+
+  describe Bookshelf do 
+    let(:bookshelf) { Bookshelf.new }
+
+    it_should_behave_like 'a bookshelf'
+  end
+
+  describe Bookshelf::Mongo do
+    let(:bookshelf) { Bookshelf.new }
+
+    it_should_behave_like 'a bookshelf'
+  end 
 end
